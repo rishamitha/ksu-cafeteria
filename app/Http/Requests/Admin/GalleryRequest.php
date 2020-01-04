@@ -2,11 +2,11 @@
 
 namespace App\Http\Requests\Admin;
 
-use App\Models\Menu;
+use App\Models\Gallery;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
-class MenuRequest extends FormRequest
+class GalleryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -16,9 +16,9 @@ class MenuRequest extends FormRequest
     public function authorize()
     {
         if ($this->isMethod('patch')) {
-            $menu = Menu::find($this->route('menu'))->first();
+            $gallery = Gallery::find($this->route('gallery'))->first();
 
-            return (Auth::check() && Auth::id() == $menu->stall_id);
+            return (Auth::check() && Auth::id() == $gallery->stall_id);
         }
 
         return (Auth::check());
@@ -32,11 +32,7 @@ class MenuRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'name'        => 'required|max:20',
-            'description' => 'nullable|max:500',
-            'price'       => 'required|integer|min:1',
-            'image'       => 'required',
-
+            'caption' => 'nullable|max:50',
         ];
 
         if ($this->isMethod('post')) {

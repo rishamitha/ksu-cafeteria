@@ -14,27 +14,23 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('', 'MenuController@index')->name('index');
 
         Route::get('create', 'MenuController@create')->name('create');
-
         Route::post('', 'MenuController@store')->name('store');
 
-        Route::get('edit/{menu}', 'MenuController@edit')->name('edit');
+        Route::get('{menu}', 'MenuController@edit')->name('edit');
         Route::patch('{menu}', 'MenuController@update')->name('update');
+
         Route::delete('{menu?}', 'MenuController@destroy')->name('destroy');
     });
 
     Route::group(['prefix' => 'gallery', 'as' => 'gallery.'], function () {
         Route::get('', 'GalleryController@index')->name('index');
 
-        Route::get('create', function () {})->name('create');
-
-        Route::post('', function () {
-            return 'store menu';
-        })->name('store');
-
-        Route::get('edit', function () {})->name('edit');
-        Route::patch('update', function () {})->name('update');
-        Route::delete('delete', function () {})->name('destroy');
+        Route::post('', 'GalleryController@store')->name('store');
+        Route::patch('{gallery?}', 'GalleryController@update')->name('update');
+        Route::delete('{gallery?}', 'GalleryController@destroy')->name('destroy');
     });
+
+    Route::patch('stall/{stall}', 'StallController@update')->name('stall.update');
 });
 
 Route::group(['as' => 'auth.', 'namespace' => 'Auth'], function () {

@@ -19,11 +19,6 @@ class Menu extends Model
         return $this->belongsTo(Stall::class);
     }
 
-    public function setStallIdAttribute($value)
-    {
-        $this->attributes['stall_id'] = Auth::id();
-    }
-
     public function getImageUrlAttribute()
     {
         if ($this->attributes['image']) {

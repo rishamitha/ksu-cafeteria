@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
+use App\Models\Gallery;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\GalleryRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+use Intervention\Image\Facades\Image;
 
 class GalleryController extends Controller
 {
@@ -14,17 +18,9 @@ class GalleryController extends Controller
      */
     public function index()
     {
-        return view('admin.gallery.index');
-    }
+        $galleries = Gallery::where('stall_id', Auth::id())->paginate(5);
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return view('admin.gallery.index')->with(compact('galleries'));
     }
 
     /**
@@ -33,31 +29,28 @@ class GalleryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(GalleryRequest $request)
     {
-        //
-    }
+        $gallery = new Gallery($request->only(['caption']));
+        $gallery->stall_id = Auth::id();
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
+        if ($request->hasFile('image')) {
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+            $ext  = $request->file('image')->getClientOriginalExtension();
+            $name = Str::random(10) . '.' . $ext;
+
+            $image = Image::make($request->file('image'));
+            $image->fit(300, 300);
+            $image->save(public_path(Gallery::IMAGE_FOLDER) . $name);
+
+            $gallery->image = $name;
+        }
+
+        $gallery->save();
+
+        $request->session()->flash('success', 'Gallery Saved');
+
+        return response()->json(['message' => 'Gallery Saved', 'status' => 200]);
     }
 
     /**
@@ -67,9 +60,31 @@ class GalleryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(GalleryRequest $request, Gallery $gallery)
     {
-        //
+        $gallery->fill($request->only(['caption']));
+        $gallery->stall_id = Auth::id();
+
+        if ($request->hasFile('image')) {
+            if ($gallery->image) {
+                unlink(public_path(Gallery::IMAGE_FOLDER) . $gallery->image);
+            }
+
+            $ext  = $request->file('image')->getClientOriginalExtension();
+            $name = Str::random(10) . '.' . $ext;
+
+            $image = Image::make($request->file('image'));
+            $image->fit(300, 300);
+            $image->save(public_path(Gallery::IMAGE_FOLDER) . $name);
+
+            $gallery->image = $name;
+        }
+
+        $gallery->save();
+
+        $request->session()->flash('success', 'Gallery Updated');
+
+        return response()->json(['message' => 'Gallery Updated', 'status' => 200]);
     }
 
     /**
@@ -78,8 +93,14 @@ class GalleryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Gallery $gallery)
     {
-        //
+        if ($gallery->image) {
+            unlink(public_path(Gallery::IMAGE_FOLDER) . $gallery->image);
+        }
+
+        $gallery->delete();
+
+        return redirect()->route('admin.gallery.index')->with('success', 'Gallery Deleted');
     }
 }

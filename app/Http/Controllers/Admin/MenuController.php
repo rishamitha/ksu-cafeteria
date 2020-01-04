@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
+use App\Models\Menu;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\MenuRequest;
-use App\Models\Menu;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
@@ -63,17 +62,6 @@ class MenuController extends Controller
         $menu->save();
 
         return redirect()->back()->with('success', 'Menu Saved!');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
     }
 
     /**

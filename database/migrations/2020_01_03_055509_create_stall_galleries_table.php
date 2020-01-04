@@ -17,7 +17,6 @@ class CreateStallGalleriesTable extends Migration
             $table->bigIncrements('id');
             $table->string('image', 20);
             $table->string('caption', 50)->nullable();
-            $table->integer('position');
             $table->unsignedBigInteger('stall_id');
             $table->timestamps();
             $table->softDeletes();

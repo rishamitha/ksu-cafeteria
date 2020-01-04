@@ -17,19 +17,26 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-md-4 col-sm-12">
-                            <img src="https://via.placeholder.com/500x500" alt="" class="img-fluid">
+                            @if ($stall->image)
+                                <img src="{{ $stall->imageUrl }}" alt="" class="img-fluid">
+                            @else
+                                <img src="https://via.placeholder.com/500x500" alt="" class="img-fluid">
+                            @endif
                         </div>
                         <div class="col-md-8">
-                            <form action="">
+                            @include('admin.common.error')
+                            <form action="{{ route('admin.stall.update', Auth::id()) }}" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                @method('PATCH')
                                 <div class="form-group">
-                                    <label for="">Stall Name</label>
-                                    <input type="text" class="form-control">
+                                    <label for="stall">Stall Name</label>
+                                    <input name="name" type="text" class="form-control" id="stall" value="{{ old('name', optional($stall)->name) }}">
                                 </div>
                                 <div class="form-group">
-                                    <label for="">Description</label>
-                                    <textarea name="" id="" rows="4" class="form-control"></textarea>
+                                    <label for="description">Description</label>
+                                    <textarea name="description" id="description" rows="4" class="form-control">{{ old('description', optional($stall)->description) }}</textarea>
                                 </div>
-                                <input type="file" name="photo" id="">
+                                <input type="file" name="image" id="image" class="form-control-file">
                                 <button type="submit" class="btn btn-primary float-right">Save Changes</button>
                             </form>
                         </div>

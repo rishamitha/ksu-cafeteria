@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class Stall extends Authenticatable
 {
     use Notifiable;
+    const IMAGE_FOLDER = 'uploads/stall/';
 
     /**
      * The attributes that are mass assignable.
@@ -16,7 +17,7 @@ class Stall extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'description'
     ];
 
     /**
@@ -37,7 +38,6 @@ class Stall extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-
     public function menus()
     {
         return $this->hasMany(Menu::class);
@@ -46,5 +46,12 @@ class Stall extends Authenticatable
     public function galleries()
     {
         return $this->hasMany(Gallery::class);
+    }
+
+    public function getImageUrlAttribute()
+    {
+        if ($this->attributes['image']) {
+            return asset(self::IMAGE_FOLDER . $this->attributes['image']);
+        }
     }
 }
