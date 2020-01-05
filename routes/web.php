@@ -11,8 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('user.welcome');
-})->name('welcome');
+Route::get('/', 'HomeController@index')->name('home');
 
-// Route::get('/home', 'HomeController@index')->name('home');
+Route::get('stall/{stall}', 'StallController@show')->name('stall.show');
