@@ -19,6 +19,7 @@
     <!-- Custom styles for this template-->
     <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/no-more-tables.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/jquery.amaran/0.5.4/amaran.min.css">
 
 </head>
 
@@ -185,6 +186,20 @@
     </script>
 
     @yield('script')
+
+    <script src="//cdn.jsdelivr.net/jquery.amaran/0.5.4/jquery.amaran.min.js"></script>
+    @if (session('success'))
+
+        <script>
+            $(function(){
+                $.amaran({
+                    content: {
+                        'message': "{{ session('success') }}",
+                    }
+                });
+            });
+        </script>
+    @endif
 </body>
 
 </html>
