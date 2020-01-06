@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -24,4 +25,13 @@ class Gallery extends Model
             return asset(self::IMAGE_FOLDER . $this->attributes['image']);
         }
     }
+
+    // protected static function boot()
+    // {
+    //     parent::boot();
+
+    //     static::addGlobalScope('order', function (Builder $builder) {
+    //         $builder->orderBy('created_at', 'desc');
+    //     });
+    // }
 }

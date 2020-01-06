@@ -16,7 +16,7 @@ class GalleryRequest extends FormRequest
     public function authorize()
     {
         if ($this->isMethod('patch')) {
-            $gallery = Gallery::find($this->route('gallery'))->first();
+            $gallery = $this->route('gallery');
 
             return (Auth::check() && Auth::id() == $gallery->stall_id);
         }

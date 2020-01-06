@@ -46,7 +46,7 @@
                                 <input name="price" type="number" id="price" class="form-control" value="{{ old('price', optional($menu)->price) }}">
                             </div>
                             <div class="form-group">
-                                <input type="checkbox" name="favorite" id="favorite" {{ (old('favorite', optional($menu)->is_recommended)) ? 'checked' : '' }}>
+                                <input type="checkbox" name="recommended" id="recommended" {{ (old('recommended', optional($menu)->is_recommended)) ? 'checked' : '' }}>
                                 <label for="recommended">Set As Recommended</label>
                             </div>
                             <button type="submit" class="btn btn-primary">Save</button>

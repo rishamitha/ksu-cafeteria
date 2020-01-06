@@ -30,7 +30,7 @@ class MenuController extends Controller
      */
     public function create()
     {
-        return view('admin.menu.form');
+        return view('admin.menu.form')->with(['menu' => null]);
     }
 
     /**
@@ -61,7 +61,7 @@ class MenuController extends Controller
         
         $menu->save();
 
-        return redirect()->back()->with('success', 'Menu Saved!');
+        return redirect()->route('admin.menu.index')->with('success', 'Menu Saved!');
     }
 
     /**

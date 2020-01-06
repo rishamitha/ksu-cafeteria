@@ -33,7 +33,7 @@
                                 </thead>
                                 <tbody>
                                     @forelse ($menus as $menu)
-                                        <tr class="">
+                                        <tr class="{{ ($menu->is_recommended) ? 'border-left-warning' : '' }}">
                                             <td data-title="No">{{ $menus->perPage() * ($menus->currentPage() - 1) + $loop->iteration }}</td>
                                             <td data-title="Image"><img src="{{ $menu->imageUrl }}" alt="{{ $menu->name }}" class="img-fluid"></td>
                                             <td data-title="Name">{{ $menu->name }}</td>

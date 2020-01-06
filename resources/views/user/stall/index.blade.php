@@ -9,7 +9,7 @@
 
     <div class="row">
         <div class="col-md-12">
-            <p>{{ $stall->description }}</p>
+            <p class="text-center">{{ $stall->description }}</p>
         </div>
     </div>
 
@@ -28,6 +28,7 @@
                     </div>
 
                     <div class="col-md-8">
+                        <h4>{{ $menu->name }}</h4>
                         <p>{{ $menu->description }}</p>
                         <div class="float-left">
                             NTD <strong>{{ $menu->price }}</strong>
@@ -38,16 +39,16 @@
                                 Recommended <i class="fas fa-star" style="color: #F4AB39"></i>
                             </div>
                         @endif
+
                     </div>
                 </div>
-
+                <hr>
             @empty
                 <div class="row">
                     <div class="col-md-12">No Data Found</div>
                 </div>
             @endforelse
 
-            <hr>
         </div>
     </div>
 

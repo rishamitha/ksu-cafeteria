@@ -51,6 +51,8 @@
                                     </tbody>
                                 </table>
                             </div>
+
+                            {{ $galleries->links() }}
                         </div>
                     </div>
                 </div>

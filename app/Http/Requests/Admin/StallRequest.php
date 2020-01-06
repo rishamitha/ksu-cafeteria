@@ -16,7 +16,7 @@ class StallRequest extends FormRequest
     public function authorize()
     {
         if ($this->isMethod('patch')) {
-            $stall = Stall::find($this->route('stall'))->first();
+            $stall = $this->route('stall');
 
             return (Auth::check() && Auth::id() == $stall->id);
         }
@@ -34,7 +34,7 @@ class StallRequest extends FormRequest
         return [
             'name' => 'required|max:200',
             'description' => 'required|max:800',
-            'image' => 'required|max:6000',
+            'image' => 'nullable|max:6000',
         ];
     }
 }

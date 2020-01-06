@@ -16,7 +16,7 @@ class MenuRequest extends FormRequest
     public function authorize()
     {
         if ($this->isMethod('patch')) {
-            $menu = Menu::find($this->route('menu'))->first();
+            $menu = $this->route('menu');
 
             return (Auth::check() && Auth::id() == $menu->stall_id);
         }
