@@ -20,7 +20,7 @@ class CreateStallsTable extends Migration
             $table->string('description', 800)->nullable();
             $table->string('password', 60);
             $table->string('image', 20)->nullable();
-            $table->timestamp('email_verified_at')->nullable();
+            // $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
 
